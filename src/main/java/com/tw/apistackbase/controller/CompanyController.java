@@ -20,12 +20,22 @@ public class CompanyController {
     }
 
     @GetMapping("/companies/{empployeesNumber}")
-    public ResponseEntity getCompanyById(@PathVariable long empployeesNumber){
+    public ResponseEntity getCompanyByempployeesNumber(@PathVariable long empployeesNumber){
         return ResponseEntity.ok(companyRepository.getCompanies()
                 .stream()
                 .filter(v -> v.getEmpployeesNumber() == empployeesNumber)
                 .findFirst()
                 .orElse(null)
                 );
+    }
+
+    @GetMapping("/companies/{empployeesNumber}/employees")
+    public ResponseEntity getemployeesByempployeesNumber(@PathVariable long empployeesNumber){
+        return ResponseEntity.ok(companyRepository.getCompanies()
+                .stream()
+                .filter(v -> v.getEmpployeesNumber() == empployeesNumber)
+                .findFirst()
+                .orElse(null).getEmployees()
+        );
     }
 }

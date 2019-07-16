@@ -35,4 +35,12 @@ public class CompanyControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().json("{\"companyName\":\"TX\",\"employees\":[{\"name\":\"Khai\",\"id\":1},{\"name\":\"Gordon\",\"id\":2},{\"name\":\"Shoron\",\"id\":3},{\"name\":\"Will\",\"id\":5},{\"name\":\"Dillon\",\"id\":5}],\"empployeesNumber\":1}"));
     }
+
+    @Test
+    public void should_return_employees_by_employeesNumber() throws Exception {
+        mockMvc.perform(get("/companies/1/employees"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().json("[{\"name\":\"Khai\",\"id\":1},{\"name\":\"Gordon\",\"id\":2},{\"name\":\"Shoron\",\"id\":3},{\"name\":\"Will\",\"id\":5},{\"name\":\"Dillon\",\"id\":5}]"));
+    }
 }
