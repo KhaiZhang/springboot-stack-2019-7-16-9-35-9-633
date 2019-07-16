@@ -16,11 +16,11 @@ public class Company {
         this.empployeesNumber = empployeesNumber;
     }
 
-    public String getName() {
+    public String getcompanyName() {
         return companyName;
     }
 
-    public void setName(String name) {
+    public void setcompanyName(String name) {
         this.companyName = name;
     }
 
@@ -32,11 +32,11 @@ public class Company {
         this.employees = employees;
     }
 
-    public long getId() {
+    public long getEmpployeesNumber() {
         return empployeesNumber;
     }
 
-    public void setId(long empployeesNumber) {
+    public void setEmpployeesNumber(long empployeesNumber) {
         this.empployeesNumber = empployeesNumber ;
     }
 }

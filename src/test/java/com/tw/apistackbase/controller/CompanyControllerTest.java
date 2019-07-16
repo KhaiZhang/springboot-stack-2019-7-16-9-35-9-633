@@ -27,4 +27,12 @@ public class CompanyControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().json("[{\"employees\":[{\"name\":\"Khai\",\"id\":1},{\"name\":\"Gordon\",\"id\":2},{\"name\":\"Shoron\",\"id\":3},{\"name\":\"Will\",\"id\":5},{\"name\":\"Dillon\",\"id\":5}],\"name\":\"TX\",\"id\":1},{\"employees\":[{\"name\":\"Kar\",\"id\":6},{\"name\":\"Gox\",\"id\":7},{\"name\":\"Zed\",\"id\":8},{\"name\":\"Akri\",\"id\":9},{\"name\":\"Ryte\",\"id\":10}],\"name\":\"alibaba\",\"id\":2}]"));
     }
+
+    @Test
+    public void should_return_companies_by_employeesNumber() throws Exception {
+        mockMvc.perform(get("/companies/1"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().json("{\"companyName\":\"TX\",\"employees\":[{\"name\":\"Khai\",\"id\":1},{\"name\":\"Gordon\",\"id\":2},{\"name\":\"Shoron\",\"id\":3},{\"name\":\"Will\",\"id\":5},{\"name\":\"Dillon\",\"id\":5}],\"empployeesNumber\":1}"));
+    }
 }
