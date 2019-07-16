@@ -47,4 +47,16 @@ public class CompanyRepository {
         companies.add(company);
         return company;
     }
+
+    public Company deleteCompany(long empployeesNumber){
+        Company company = new Company();
+        for (Company element:companies) {
+            if(element.getEmpployeesNumber() == empployeesNumber){
+                company=element;
+                break;
+            }
+        }
+        companies.remove(company);
+        return company;
+    }
 }
