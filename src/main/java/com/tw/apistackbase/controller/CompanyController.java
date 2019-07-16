@@ -41,4 +41,9 @@ public class CompanyController {
     public ResponseEntity updateCompanyInformation(@PathVariable long empployeesNumber,@RequestBody Company company){
         return ResponseEntity.ok(companyRepository.updateCompanyByempployeesNumber(empployeesNumber,company));
     }
+
+    @PostMapping("/companies")
+    public ResponseEntity addCompany(@RequestBody Company company){
+        return ResponseEntity.ok(companyRepository.addNewCompany(company));
+    }
 }
