@@ -28,4 +28,16 @@ public class CompanyRepository {
     public void setCompanies(List<Company> companies) {
         this.companies = companies;
     }
+
+    public Company updateCompanyByempployeesNumber(long empployeesNumber,Company company){
+        for (Company element:companies) {
+            if(element.getEmpployeesNumber() == empployeesNumber){
+                element.setcompanyName(company.getcompanyName());
+                element.setEmployees(company.getEmployees());
+                element.setEmpployeesNumber(company.getEmpployeesNumber());
+                company=element;
+            }
+        }
+        return company;
+    }
 }
