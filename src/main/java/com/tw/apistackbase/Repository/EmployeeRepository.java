@@ -1,8 +1,7 @@
-package com.tw.apistackbase.controller;
+package com.tw.apistackbase.Repository;
 
-import org.springframework.context.annotation.ComponentScan;
+import com.tw.apistackbase.model.Employee;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Repository;
 
 import java.util.Arrays;
 import java.util.List;

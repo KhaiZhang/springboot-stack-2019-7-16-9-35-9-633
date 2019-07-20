@@ -1,4 +1,4 @@
-package com.tw.apistackbase.controller;
+package com.tw.apistackbase.model;
 
 import org.springframework.context.annotation.Bean;
 

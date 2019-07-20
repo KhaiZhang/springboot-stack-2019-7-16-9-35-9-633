@@ -1,4 +1,4 @@
-package com.tw.apistackbase.controller;
+package com.tw.apistackbase.model;
 
 import java.util.List;
 
@@ -10,8 +10,8 @@ public class Company {
     public Company(){
 
     }
-    public Company(String name, List<Employee> employees, long empployeesNumber) {
-        this.companyName = name;
+    public Company(String companyName, List<Employee> employees, long empployeesNumber) {
+        this.companyName = companyName;
         this.employees = employees;
         this.empployeesNumber = empployeesNumber;
     }
@@ -20,8 +20,8 @@ public class Company {
         return companyName;
     }
 
-    public void setcompanyName(String name) {
-        this.companyName = name;
+    public void setcompanyName(String companyName) {
+        this.companyName = companyName;
     }
 
     public List<Employee> getEmployees() {
