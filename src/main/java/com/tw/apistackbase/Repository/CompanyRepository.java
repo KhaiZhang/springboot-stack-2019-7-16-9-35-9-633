@@ -43,8 +43,6 @@ public class CompanyRepository {
     }
 
     public Company addNewCompany(Company company){
-        long empployeesNumber = companies.get(companies.size() - 1).getEmpployeesNumber()+1;
-        company.setEmpployeesNumber(empployeesNumber);
         companies.add(company);
         return company;
     }

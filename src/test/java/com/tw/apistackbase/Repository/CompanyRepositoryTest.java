@@ -43,8 +43,11 @@ public class CompanyRepositoryTest {
     void updateCompanyByempployeesNumber() {
     }
 
-
-    void addNewCompany() {
+    @Test
+    public void should_add_a_new_company() {
+        Company company = new Company(5, "360", employeeRepository.getFirstEmployee(), 1);
+        Company newCompany = companyRepository.addNewCompany(company);
+        Assertions.assertEquals(newCompany.getId(),5);
     }
 
 
