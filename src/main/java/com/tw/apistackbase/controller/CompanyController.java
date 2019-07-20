@@ -13,8 +13,21 @@ public class CompanyController {
     private CompanyRepository companyRepository;
 
     @GetMapping("/companies")
-    public ResponseEntity getCompanies(){
-        return ResponseEntity.ok(companyRepository.getCompanies());
+    public ResponseEntity getCompanies(@RequestParam(value = "page",defaultValue = "0")int page ,
+                                       @RequestParam(value = "pageSize"  , defaultValue = "0") int pageSize){
+        if(page ==0 && pageSize ==0){
+            return ResponseEntity.ok(companyRepository.getCompanies());
+        }
+        else {
+            int startIndex = (page - 1) * pageSize;
+            int endIndex = startIndex + pageSize;
+            int size = companyRepository.getCompanies().size();
+            if(endIndex > size ){
+                return ResponseEntity.ok(companyRepository.getCompanies().subList(startIndex,size));
+            }
+            return ResponseEntity.ok(companyRepository.getCompanies().subList(startIndex,endIndex));
+        }
+
     }
 
     @GetMapping("/companies/{id}")

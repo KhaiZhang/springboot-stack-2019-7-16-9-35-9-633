@@ -65,6 +65,16 @@ public class CompanyControllerTest {
     }
 
     @Test
+    public void should_return_companies_by_page_and_pageSize() throws Exception {
+        List<Company> companies = companyRepository.getCompanies();
+        when(companyRepository.getCompanies()).thenReturn(companies);
+        mockMvc.perform(get("/companies").param("page","1").param("pageSize","3"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().json(new Gson().toJson(companies)));
+    }
+
+    @Test
     public void should_return_employees_by_employeesNumber() throws Exception {
         mockMvc.perform(get("/companies/1/employees"))
                 .andDo(print())
