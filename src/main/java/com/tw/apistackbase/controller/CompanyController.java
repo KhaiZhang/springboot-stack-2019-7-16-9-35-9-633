@@ -17,14 +17,9 @@ public class CompanyController {
         return ResponseEntity.ok(companyRepository.getCompanies());
     }
 
-    @GetMapping("/companies/{empployeesNumber}")
-    public ResponseEntity getCompanyByempployeesNumber(@PathVariable long empployeesNumber){
-        return ResponseEntity.ok(companyRepository.getCompanies()
-                .stream()
-                .filter(v -> v.getEmpployeesNumber() == empployeesNumber)
-                .findFirst()
-                .orElse(null)
-                );
+    @GetMapping("/companies/{id}")
+    public ResponseEntity getCompanyById(@PathVariable long id){
+        return ResponseEntity.ok(companyRepository.getCompanyById(id));
     }
 
     @GetMapping("/companies/{empployeesNumber}/employees")

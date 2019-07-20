@@ -15,8 +15,8 @@ public class CompanyRepository {
 
         private List<Company> companies = new ArrayList<Company>();
     {
-        companies.add( new Company("TX",employeeRepository.getFirstEmployee(),1));
-        companies.add( new Company("alibaba",employeeRepository.getSecondEmployee(),2));
+        companies.add( new Company(1,"TX",employeeRepository.getFirstEmployee(),1));
+        companies.add( new Company(2,"alibaba",employeeRepository.getSecondEmployee(),2));
     }
 
     public List<Company> getCompanies() {
@@ -27,10 +27,14 @@ public class CompanyRepository {
         this.companies = companies;
     }
 
+    public Company getCompanyById( long id){
+        return companies.stream().filter(company -> company.getId() == id ).findAny().orElse(null);
+    }
+
     public Company updateCompanyByempployeesNumber(long empployeesNumber,Company company){
         for (Company element:companies) {
             if(element.getEmpployeesNumber() == empployeesNumber){
-                element.setcompanyName(company.getcompanyName());
+                element.setCompanyName(company.getCompanyName());
                 element.setEmployees(company.getEmployees());
                 company=element;
             }
