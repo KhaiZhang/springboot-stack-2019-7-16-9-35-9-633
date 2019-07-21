@@ -10,6 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -29,5 +30,11 @@ public class EmployeeRepositoryTest {
         Assertions.assertEquals(employee,actualEmployee);
     }
 
-
+    @Test
+    public void should_return_employees_by_gender(){
+        List<Employee> employees = employeeRepository.getFirstEmployee();
+        List<Employee> maleEmployees = employees.stream().filter(element -> "male".equals(element.getGender())).collect(Collectors.toList());
+        Employee employee = maleEmployees.stream().findAny().orElse(null);
+        Assertions.assertEquals(employee.getGender(),"male");
+    }
 }

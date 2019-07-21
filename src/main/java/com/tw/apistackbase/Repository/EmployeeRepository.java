@@ -7,6 +7,7 @@ import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Component("EmployeeRepository")
@@ -14,11 +15,11 @@ public class EmployeeRepository {
 
     private List<Employee> firstEmployee = new ArrayList<>();
     {
-        firstEmployee.add(new Employee("Khai",1));
-        firstEmployee.add(new Employee("Gordon",2));
-        firstEmployee.add(new Employee("Shoron",3));
-        firstEmployee.add(new Employee("Will",4));
-        firstEmployee.add(new Employee("Dillon",5));
+        firstEmployee.add(new Employee("Khai",1,"male"));
+        firstEmployee.add(new Employee("Gordon",2,"male"));
+        firstEmployee.add(new Employee("Shoron",3,"female"));
+        firstEmployee.add(new Employee("Will",4,"male"));
+        firstEmployee.add(new Employee("Dillon",5,"male"));
     }
             ;
 
@@ -49,5 +50,9 @@ public class EmployeeRepository {
 
     public Employee getEmployeeById(long id){
         return firstEmployee.stream().filter(element -> element.getId() == id).findFirst().orElse(null);
+    }
+
+    public List<Employee> getEmployeesByGender(String  gender){
+        return firstEmployee.stream().filter(element -> gender.equals(element.getGender())).collect(Collectors.toList());
     }
 }

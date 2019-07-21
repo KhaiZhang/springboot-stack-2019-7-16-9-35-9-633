@@ -20,18 +20,23 @@ public class EmployeeController {
 
     @GetMapping("/employees")
     public ResponseEntity<List<Employee>> getEmployeesByPageAndPageSize(@RequestParam(value = "page",defaultValue = "0")int page ,
-                                                                        @RequestParam(value = "pageSize"  , defaultValue = "0") int pageSize){
-        if(page ==0 && pageSize ==0){
+                                                                        @RequestParam(value = "pageSize"  , defaultValue = "0") int pageSize ,
+                                                                         @RequestParam(value = "gender" , defaultValue = "0") String gender){
+
+         if(page ==0 && pageSize ==0 && "0".equals(gender)){
             return ResponseEntity.ok(employeeRepository.getFirstEmployee());
         }
-        else {
-            int startIndex = (page - 1) * pageSize;
-            int endIndex = startIndex + pageSize;
-            int size = employeeRepository.getFirstEmployee().size();
-            if(endIndex > size ){
-                return ResponseEntity.ok(employeeRepository.getFirstEmployee().subList(startIndex,size));
-            }
-            return ResponseEntity.ok(employeeRepository.getFirstEmployee().subList(startIndex,endIndex));
+         else if(page != 0 && pageSize != 0){
+             int startIndex = (page - 1) * pageSize;
+             int endIndex = startIndex + pageSize;
+             int size = employeeRepository.getFirstEmployee().size();
+             if(endIndex > size ){
+                 return ResponseEntity.ok(employeeRepository.getFirstEmployee().subList(startIndex,size));
+             }
+             return ResponseEntity.ok(employeeRepository.getFirstEmployee().subList(startIndex,endIndex));
+        }
+         else {
+            return ResponseEntity.ok(employeeRepository.getEmployeesByGender(gender));
         }
     }
 
@@ -39,7 +44,6 @@ public class EmployeeController {
     public ResponseEntity<Employee> getEmployeeById(@PathVariable(value = "id") long id){
         return ResponseEntity.ok(employeeRepository.getEmployeeById(id));
     }
-
 
 
 }
