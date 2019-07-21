@@ -32,6 +32,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 public class CompanyControllerTest {
+
     @Autowired
     private MockMvc mockMvc;
 
@@ -113,15 +114,15 @@ public class CompanyControllerTest {
 
 
 
-    //    @Test
-//    public void should_update_company_information_by_id() throws Exception {
-//        Company company = new Company(2, "360", employeeRepository.getFirstEmployee(), 1);
-//        when(companyRepository.updateCompanyById(anyLong(),any(Company.class))).thenReturn(company);
-//        mockMvc.perform(post("/companies").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(company)))
-//                .andDo(print())
-//                .andExpect(status().isOk())
-//                .andExpect(jsonPath("$.companyName").value(company.getCompanyName()));
-//    }
+        @Test
+    public void should_update_company_information_by_id() throws Exception {
+        Company company = new Company(1, "360", employeeRepository.getFirstEmployee(), 1);
+        when(companyRepository.updateCompanyById(anyLong(),any(Company.class))).thenReturn(company);
+        mockMvc.perform(put("/companies/{id}",company.getId()).contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(company)))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(company.getId()));
+    }
 }
 
 //class isCompany implements ArgumentMatcher<Company> {
