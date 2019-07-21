@@ -41,8 +41,12 @@ public class CompanyControllerTest {
 
     @Test
     public void should_return_companies() throws Exception {
-        List<Employee> firstEmployee = employeeRepository.getFirstEmployee();
-        List<Employee> secondEmployee = employeeRepository.getSecondEmployee();
+        List<Employee> firstEmployee = new ArrayList<>();
+        firstEmployee.add(new Employee("dox",2));
+        firstEmployee.add(new Employee("coc",3));
+        List<Employee> secondEmployee = new ArrayList<>();
+        secondEmployee.add(new Employee("doxx",4));
+        secondEmployee.add(new Employee("cocd",6));
         Company firstCompany = new Company(1,"TX", firstEmployee, 1);
         Company secondCompany = new Company(2,"alibaba", secondEmployee, 2);
         List<Company> companies = new ArrayList<>();
@@ -58,7 +62,9 @@ public class CompanyControllerTest {
 
     @Test
     public void should_return_companies_by_id() throws Exception {
-        List<Employee> firstEmployee = employeeRepository.getFirstEmployee();
+        List<Employee> firstEmployee = new ArrayList<>();
+        firstEmployee.add(new Employee("dox",2));
+        firstEmployee.add(new Employee("coc",3));
         Company company = new Company(4,"微软", firstEmployee, 4);
         when(companyRepository.getCompanyById(anyLong())).thenReturn(company);
         mockMvc.perform(get("/companies/{id}", company.getId()))
@@ -69,7 +75,17 @@ public class CompanyControllerTest {
 
     @Test
     public void should_return_companies_by_page_and_pageSize() throws Exception {
-        List<Company> companies = companyRepository.getCompanies();
+        List<Employee> firstEmployee = new ArrayList<>();
+        firstEmployee.add(new Employee("dox",2));
+        firstEmployee.add(new Employee("coc",3));
+        List<Employee> secondEmployee = new ArrayList<>();
+        secondEmployee.add(new Employee("doxx",4));
+        secondEmployee.add(new Employee("cocd",6));
+        Company firstCompany = new Company(1,"TX", firstEmployee, 1);
+        Company secondCompany = new Company(2,"alibaba", secondEmployee, 2);
+        List<Company> companies = new ArrayList<>();
+        companies.add(firstCompany);
+        companies.add(secondCompany);
         when(companyRepository.getCompanies()).thenReturn(companies);
         mockMvc.perform(get("/companies").param("page","1").param("pageSize","3"))
                 .andDo(print())
@@ -79,7 +95,10 @@ public class CompanyControllerTest {
 
     @Test
     public void should_add_a_new_company() throws Exception {
-        Company company = new Company(5, "360", employeeRepository.getFirstEmployee(), 1);
+        List<Employee> firstEmployee = new ArrayList<>();
+        firstEmployee.add(new Employee("dox",2));
+        firstEmployee.add(new Employee("coc",3));
+        Company company = new Company(5, "360", firstEmployee, 1);
 
         when(companyRepository.addNewCompany(any(Company.class))).thenReturn(company);
         mockMvc.perform(post("/companies").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(company)))
@@ -90,7 +109,10 @@ public class CompanyControllerTest {
 
     @Test
     public void should_return_employess_by_company_id() throws Exception {
-        Company company = new Company(5, "360", employeeRepository.getFirstEmployee(), 1);
+        List<Employee> firstEmployee = new ArrayList<>();
+        firstEmployee.add(new Employee("dox",2));
+        firstEmployee.add(new Employee("coc",3));
+        Company company = new Company(5, "360", firstEmployee, 1);
         when(companyRepository.getEmployeesByCompanyId(anyLong())).thenReturn(company.getEmployees());
         mockMvc.perform(get("/companies/{id}/employees",company.getId()))
                 .andDo(print())
