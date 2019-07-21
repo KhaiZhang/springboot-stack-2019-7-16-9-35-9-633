@@ -56,4 +56,19 @@ public class EmployeeControllerTest {
                 .andExpect(content().json(new Gson().toJson(employee)));
     }
 
+    @Test
+    public void should_return_employee_by_page_and_pageSize() throws Exception {
+        List<Employee> employees = new ArrayList<>();
+        employees.add(new Employee("Khai",1));
+        employees.add(new Employee("Gordon",2));
+        employees.add(new Employee("Shoron",3));
+        employees.add(new Employee("Will",4));
+        employees.add(new Employee("Dillon",5));
+        when(employeeRepository.getFirstEmployee()).thenReturn(employees);
+        mockMvc.perform(get("/employees").param("page","1").param("pageSize","5"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().json(new Gson().toJson(employees)));
+    }
+
 }

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -18,14 +19,27 @@ public class EmployeeController {
     private EmployeeRepository employeeRepository;
 
     @GetMapping("/employees")
-    public ResponseEntity<List<Employee>> getEmployees(){
-        List<Employee> employees = employeeRepository.getFirstEmployee();
-        return ResponseEntity.ok(employees);
+    public ResponseEntity<List<Employee>> getEmployeesByPageAndPageSize(@RequestParam(value = "page",defaultValue = "0")int page ,
+                                                                        @RequestParam(value = "pageSize"  , defaultValue = "0") int pageSize){
+        if(page ==0 && pageSize ==0){
+            return ResponseEntity.ok(employeeRepository.getFirstEmployee());
+        }
+        else {
+            int startIndex = (page - 1) * pageSize;
+            int endIndex = startIndex + pageSize;
+            int size = employeeRepository.getFirstEmployee().size();
+            if(endIndex > size ){
+                return ResponseEntity.ok(employeeRepository.getFirstEmployee().subList(startIndex,size));
+            }
+            return ResponseEntity.ok(employeeRepository.getFirstEmployee().subList(startIndex,endIndex));
+        }
     }
 
     @GetMapping("/employees/{id}")
     public ResponseEntity<Employee> getEmployeeById(@PathVariable(value = "id") long id){
         return ResponseEntity.ok(employeeRepository.getEmployeeById(id));
     }
+
+
 
 }
