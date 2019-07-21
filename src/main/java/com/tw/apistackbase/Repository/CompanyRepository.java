@@ -1,6 +1,7 @@
 package com.tw.apistackbase.Repository;
 
 import com.tw.apistackbase.model.Company;
+import com.tw.apistackbase.model.Employee;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -31,16 +32,13 @@ public class CompanyRepository {
         return companies.stream().filter(company -> company.getId() == id ).findAny().orElse(null);
     }
 
-    public Company updateCompanyByempployeesNumber(long empployeesNumber,Company company){
-        for (Company element:companies) {
-            if(element.getEmpployeesNumber() == empployeesNumber){
-                element.setCompanyName(company.getCompanyName());
-                element.setEmployees(company.getEmployees());
-                company=element;
-            }
-        }
-        return company;
+    public List<Employee> getEmployeesByCompanyId(long id){
+        Company company = companies.stream().filter(element -> element.getId() == id).findFirst().orElse(null);
+        if(company == null) return null;
+        else return company.getEmployees();
     }
+
+
 
     public Company addNewCompany(Company company){
         companies.add(company);

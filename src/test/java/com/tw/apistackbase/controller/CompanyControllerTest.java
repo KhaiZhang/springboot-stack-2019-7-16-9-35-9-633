@@ -7,6 +7,8 @@ import com.tw.apistackbase.model.Company;
 import com.tw.apistackbase.model.Employee;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.ArgumentMatcher;
+import org.mockito.ArgumentMatchers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -14,11 +16,13 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.web.servlet.tags.Param;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -59,7 +63,7 @@ public class CompanyControllerTest {
     public void should_return_companies_by_id() throws Exception {
         List<Employee> firstEmployee = employeeRepository.getFirstEmployee();
         Company company = new Company(4,"微软", firstEmployee, 4);
-        when(companyRepository.getCompanyById(company.getId())).thenReturn(company);
+        when(companyRepository.getCompanyById(anyLong())).thenReturn(company);
         mockMvc.perform(get("/companies/{id}", company.getId()))
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -86,6 +90,18 @@ public class CompanyControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(company.getId()));
     }
+
+    @Test
+    public void should_return_employess_by_company_id() throws Exception {
+        Company company = new Company(5, "360", employeeRepository.getFirstEmployee(), 1);
+        when(companyRepository.getEmployeesByCompanyId(anyLong())).thenReturn(company.getEmployees());
+        mockMvc.perform(get("/companies/{id}/employees",company.getId()))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().json(new Gson().toJson(company.getEmployees())));
+    }
+
+
 
     @Test
     public void should_return_employees_by_employeesNumber() throws Exception {
