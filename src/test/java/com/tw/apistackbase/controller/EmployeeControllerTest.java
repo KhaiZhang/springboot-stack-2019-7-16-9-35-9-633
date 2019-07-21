@@ -9,16 +9,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -86,4 +87,13 @@ public class EmployeeControllerTest {
                 .andExpect(content().json(new Gson().toJson(employees)));
     }
 
+    @Test
+    public void should_add_a_new_employee() throws Exception {
+        Employee employee = new Employee("odd", 11, "male");
+        when(employeeRepository.addNewEmployee(any(Employee.class))).thenReturn(employee);
+        mockMvc.perform(post("/employees").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(employee)))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().json(new Gson().toJson(employee)));
+    }
 }

@@ -5,10 +5,7 @@ import com.tw.apistackbase.Repository.EmployeeRepository;
 import com.tw.apistackbase.model.Employee;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -45,5 +42,9 @@ public class EmployeeController {
         return ResponseEntity.ok(employeeRepository.getEmployeeById(id));
     }
 
+    @PostMapping("/employees")
+    public ResponseEntity<Employee> createNewEmployee(@RequestBody Employee employee){
+        return ResponseEntity.ok(employeeRepository.addNewEmployee(employee));
+    }
 
 }

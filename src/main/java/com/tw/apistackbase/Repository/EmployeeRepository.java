@@ -55,4 +55,9 @@ public class EmployeeRepository {
     public List<Employee> getEmployeesByGender(String  gender){
         return firstEmployee.stream().filter(element -> gender.equals(element.getGender())).collect(Collectors.toList());
     }
+
+    public Employee addNewEmployee(Employee employee){
+        firstEmployee.add(employee);
+        return employee;
+    }
 }
