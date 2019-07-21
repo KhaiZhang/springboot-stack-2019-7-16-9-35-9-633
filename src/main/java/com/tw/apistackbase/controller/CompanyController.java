@@ -50,8 +50,8 @@ public class CompanyController {
         return ResponseEntity.ok(companyRepository.addNewCompany(company));
     }
 
-    @DeleteMapping("/companies/{empployeesNumber}")
-    public ResponseEntity deleteCompany(@PathVariable long empployeesNumber){
-        return ResponseEntity.ok(companyRepository.deleteCompany(empployeesNumber));
+    @DeleteMapping("/companies/{id}")
+    public ResponseEntity deleteEmployeesByCompanyId(@PathVariable long id){
+        return ResponseEntity.ok(companyRepository.deleteEmployeesByCompanyId(id));
     }
 }

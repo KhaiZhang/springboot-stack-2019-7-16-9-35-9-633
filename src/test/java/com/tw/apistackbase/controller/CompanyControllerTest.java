@@ -24,8 +24,7 @@ import java.util.List;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -101,13 +100,37 @@ public class CompanyControllerTest {
                 .andExpect(content().json(new Gson().toJson(company.getEmployees())));
     }
 
-
-
     @Test
-    public void should_return_employees_by_employeesNumber() throws Exception {
-        mockMvc.perform(get("/companies/1/employees"))
+    public void should_delete_employees_by_company_id() throws Exception {
+        Company company = new Company(5, "360", null, 1);
+        when(companyRepository.deleteEmployeesByCompanyId(anyLong())).thenReturn(company);
+        mockMvc.perform(delete("/companies/{id}",company.getId()))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(content().json("[{\"name\":\"Khai\",\"id\":1},{\"name\":\"Gordon\",\"id\":2},{\"name\":\"Shoron\",\"id\":3},{\"name\":\"Will\",\"id\":5},{\"name\":\"Dillon\",\"id\":5}]"));
+                .andExpect(content().json(new Gson().toJson(company)));
     }
+
+
+
+
+    //    @Test
+//    public void should_update_company_information_by_id() throws Exception {
+//        Company company = new Company(2, "360", employeeRepository.getFirstEmployee(), 1);
+//        when(companyRepository.updateCompanyById(anyLong(),any(Company.class))).thenReturn(company);
+//        mockMvc.perform(post("/companies").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(company)))
+//                .andDo(print())
+//                .andExpect(status().isOk())
+//                .andExpect(jsonPath("$.companyName").value(company.getCompanyName()));
+//    }
 }
+
+//class isCompany implements ArgumentMatcher<Company> {
+//
+//    @Override
+//    public boolean matches(Company argument) {
+//        if(argument instanceof Company){
+//            return true;
+//        }
+//        else return false;
+//    }
+//}

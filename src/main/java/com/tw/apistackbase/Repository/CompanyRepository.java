@@ -45,15 +45,29 @@ public class CompanyRepository {
         return company;
     }
 
-    public Company deleteCompany(long empployeesNumber){
+    public Company updateCompanyById(long id , Company company){
+        Company updateCompany = new Company();
+        for (Company element:companies) {
+            if(element.getId() == id){
+                if(company.getCompanyName() != null) element.setCompanyName(company.getCompanyName());
+                if(company.getEmployees() != null) element.setEmployees(company.getEmployees());
+                if(company.getEmpployeesNumber() != 0) element.setEmpployeesNumber(company.getEmpployeesNumber());
+                updateCompany=element;
+                break;
+            }
+        }
+        return updateCompany;
+    }
+
+    public Company deleteEmployeesByCompanyId(long id){
         Company company = new Company();
         for (Company element:companies) {
-            if(element.getEmpployeesNumber() == empployeesNumber){
+            if(element.getId() == id){
+                element.setEmployees(null);
                 company=element;
                 break;
             }
         }
-        companies.remove(company);
         return company;
     }
 }

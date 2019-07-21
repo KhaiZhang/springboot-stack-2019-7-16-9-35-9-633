@@ -52,7 +52,21 @@ public class CompanyRepositoryTest {
         Assertions.assertEquals(newCompany.getId(),5);
     }
 
+    //    @Test
+//    public void should_update_company_information_by_id() {
+//        Company company = new Company(1, "360", employeeRepository.getFirstEmployee(), 1);
+//        Company newCompany = companyRepository.updateCompanyById(1, company);
+//
+//        Assertions.assertEquals("360",newCompany.getCompanyName());
+//    }
 
-    void deleteCompany() {
+
+    @Test
+    public void should_delete_employees_by_company_id() {
+        Company company = companyRepository.getCompanies().stream().findAny().get();
+        long id = company.getId();
+        companyRepository.deleteEmployeesByCompanyId(id);
+        Assertions.assertEquals(null,company.getEmployees());
+
     }
 }
