@@ -37,4 +37,11 @@ public class EmployeeRepositoryTest {
         Employee employee = maleEmployees.stream().findAny().orElse(null);
         Assertions.assertEquals(employee.getGender(),"male");
     }
+
+    @Test
+    public void should_update_employee(){
+        Employee employee= new Employee("dddx", 1, "female");
+        Employee updateEmployee = employeeRepository.updateEmployeeById(employee.getId(), employee);
+        Assertions.assertEquals(updateEmployee.getName(),employee.getName());
+    }
 }

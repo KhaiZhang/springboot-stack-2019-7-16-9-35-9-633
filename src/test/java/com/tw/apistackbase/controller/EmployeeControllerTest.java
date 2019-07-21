@@ -18,8 +18,7 @@ import java.util.List;
 
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -92,6 +91,16 @@ public class EmployeeControllerTest {
         Employee employee = new Employee("odd", 11, "male");
         when(employeeRepository.addNewEmployee(any(Employee.class))).thenReturn(employee);
         mockMvc.perform(post("/employees").contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(employee)))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().json(new Gson().toJson(employee)));
+    }
+
+    @Test
+    public void should_update_employee() throws Exception {
+        Employee employee = new Employee("odd", 1, "male");
+        when(employeeRepository.updateEmployeeById(anyLong(),any(Employee.class))).thenReturn(employee);
+        mockMvc.perform(put("/employees/{id}",employee.getId()).contentType(MediaType.APPLICATION_JSON).content(new Gson().toJson(employee)))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().json(new Gson().toJson(employee)));

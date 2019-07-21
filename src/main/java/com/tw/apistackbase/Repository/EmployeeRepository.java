@@ -60,4 +60,17 @@ public class EmployeeRepository {
         firstEmployee.add(employee);
         return employee;
     }
+
+    public Employee updateEmployeeById(long id , Employee employee){
+        Employee updateEmployee = new Employee();
+        for (Employee element:firstEmployee) {
+            if(element.getId() == id ){
+                if(employee.getGender() != null ) element.setGender(employee.getGender());
+                if(employee.getName() != null ) element.setName(employee.getName());
+                updateEmployee = element;
+                break;
+            }
+        }
+        return updateEmployee;
+    }
 }
