@@ -5,6 +5,7 @@ import com.tw.apistackbase.Repository.EmployeeRepository;
 import com.tw.apistackbase.model.Employee;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.stubbing.OngoingStubbing;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -104,5 +105,14 @@ public class EmployeeControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().json(new Gson().toJson(employee)));
+    }
+
+    @Test
+    public void should_delete_employee_by_id() throws Exception {
+        when(employeeRepository.deleteEmployeeById(anyLong())).thenReturn("delete successfully");
+        mockMvc.perform(delete("/employees/{id}",1))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().string("delete successfully"));
     }
 }

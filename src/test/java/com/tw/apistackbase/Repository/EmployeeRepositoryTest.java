@@ -44,4 +44,11 @@ public class EmployeeRepositoryTest {
         Employee updateEmployee = employeeRepository.updateEmployeeById(employee.getId(), employee);
         Assertions.assertEquals(updateEmployee.getName(),employee.getName());
     }
+
+    @Test
+    public void should_delete_employee(){
+        Employee employee = employeeRepository.getFirstEmployee().stream().findAny().orElse(null);
+        String result = employeeRepository.deleteEmployeeById(employee.getId());
+        Assertions.assertEquals(result,"");
+    }
 }

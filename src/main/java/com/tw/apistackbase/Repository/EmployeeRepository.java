@@ -73,4 +73,10 @@ public class EmployeeRepository {
         }
         return updateEmployee;
     }
+
+    public String deleteEmployeeById(long id){
+        Employee employee = firstEmployee.stream().filter(element -> element.getId() == id).findAny().orElse(null);
+        firstEmployee.remove(employee);
+        return "delete succeefully";
+    }
 }
